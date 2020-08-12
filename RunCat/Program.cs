@@ -1,4 +1,5 @@
-﻿// Copyright 2020 Takuto Nakamura
+﻿// 素敵な本家様：Copyright 2020 Takuto Nakamura
+// ニコモバvar：Copyright 2020 takusan_23
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -13,14 +14,12 @@
 //    limitations under the License.
 
 using RunCat.Properties;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Resources;
-using System.Linq;
 
 namespace RunCat
 {
@@ -35,76 +34,81 @@ namespace RunCat
         }
     }
 
-    public class RunCatApplicationContext: ApplicationContext
+    public class RunCatApplicationContext : ApplicationContext
     {
+        /// <summary>
+        /// CPU使用率とる何か
+        /// </summary>
         private PerformanceCounter cpuUsage;
+        /// <summary>
+        /// タスクバーに表示するやつ
+        /// </summary>
         private NotifyIcon notifyIcon;
-        private int current = 0;
-        private string theme = "";
+        /// <summary>
+        /// 今表示してるアイコンの位置
+        /// </summary>
+        private int currentIconListPos = 0;
+        /// <summary>
+        /// アイコン配列。今回はニコモバちゃん（4枚）
+        /// </summary>
         private Icon[] icons;
+        /// <summary>
+        /// 
+        /// </summary>
         private Timer animateTimer = new Timer();
         private Timer cpuTimer = new Timer();
-        
-      
+
+
         public RunCatApplicationContext()
         {
-            SystemEvents.UserPreferenceChanged += new UserPreferenceChangedEventHandler(UserPreferenceChanged);
-
+            // CPU使用率取るなにか
             cpuUsage = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            _ = cpuUsage.NextValue(); // discards first return value
+            _ = cpuUsage.NextValue(); // 最初の戻り値を破棄します #って何
 
+            // タスクバーにアイコンを出す。WPFだとめんどいんだっけ
             notifyIcon = new NotifyIcon()
             {
-                Icon = Resources.light_cat0,
+                Icon = Resources.nicomoba_chan_1,
                 ContextMenu = new ContextMenu(new MenuItem[]
                 {
-                    new MenuItem("Exit", Exit)
+                    new MenuItem("おつ（終了）", Exit)
                 }),
                 Text = "0.0%",
                 Visible = true
             };
-
+            // アイコン配列用意
             SetIcons();
+            // アイコン切り替え関数を登録
             SetAnimation();
-            ObserveCPUTick(null, EventArgs.Empty);
+            // CPU使用率+アニメーション速度変更
+            GetCPUUsageAndAnimationSpeedChange(null, EventArgs.Empty);
+            // ↑これを定期的に呼ぶようにする
             StartObserveCPU();
-            current = 1;
+            // 現在のアイコン配列の位置？
+            currentIconListPos = 1;
         }
 
-        private string GetAppsUseTheme()
-        {
-            string keyName = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
-            try
-            {
-                RegistryKey rKey = Registry.CurrentUser.OpenSubKey(keyName);
-                int theme = (int)rKey.GetValue("SystemUsesLightTheme");
-                rKey.Close();
-                return theme == 0 ? "dark" : "light";
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine("Oh No! Couldn't get theme light/dark");
-                return "light";
-            }
-        }
-
+        /// <summary>
+        /// パラパラ漫画で使うアイコンを配列に入れて用意する
+        /// </summary>
         private void SetIcons()
         {
-            string newTheme = GetAppsUseTheme();
-            if (theme.Equals(newTheme)) return;
-            theme = newTheme;
             ResourceManager rm = Resources.ResourceManager;
             icons = new List<Icon>
             {
-                (Icon)rm.GetObject(theme + "_cat0"),
-                (Icon)rm.GetObject(theme + "_cat1"),
-                (Icon)rm.GetObject(theme + "_cat2"),
-                (Icon)rm.GetObject(theme + "_cat3"),
-                (Icon)rm.GetObject(theme + "_cat4")
+                (Icon)rm.GetObject("nicomoba_chan_1"),
+                (Icon)rm.GetObject("nicomoba_chan_2"),
+                (Icon)rm.GetObject("nicomoba_chan_3"),
+                (Icon)rm.GetObject("nicomoba_chan_4")
             }
             .ToArray();
         }
 
+        /// <summary>
+        /// 終了時にタイマー止めるなど
+        /// </summary>
+        /// <param name="sender">しらん</param>
+        /// <param name="e">わからん</param>
         private void Exit(object sender, EventArgs e)
         {
             animateTimer.Stop();
@@ -113,41 +117,51 @@ namespace RunCat
             Application.Exit();
         }
 
+        /// <summary>
+        /// ChangeIconを定期的に呼ぶようにする
+        /// </summary>
         private void SetAnimation()
         {
             animateTimer.Interval = 200;
-            animateTimer.Tick += new EventHandler(AnimationTick);
+            animateTimer.Tick += new EventHandler(ChangeIcon);
         }
 
-        private void AnimationTick(object sender, EventArgs e)
+        /// <summary>
+        /// ここが定期的に呼ばれ、画像を切り替えている。
+        /// どうやらGetCPUUsageAndAnimationSpeedChangeが更新頻度を変えてるらしい？
+        /// </summary>
+        /// <param name="sender">しらん</param>
+        /// <param name="e">わからん</param>
+        private void ChangeIcon(object sender, EventArgs e)
         {
-            notifyIcon.Icon = icons[current];
-            current = (current + 1) % icons.Length;
+            notifyIcon.Icon = icons[currentIconListPos];
+            currentIconListPos = (currentIconListPos + 1) % icons.Length;
         }
 
+        /// <summary>
+        /// GetCPUUsageAndAnimationSpeedChange関数を定期的に呼ぶようにする
+        /// </summary>
         private void StartObserveCPU()
         {
             cpuTimer.Interval = 3000;
-            cpuTimer.Tick += new EventHandler(ObserveCPUTick);
+            cpuTimer.Tick += new EventHandler(GetCPUUsageAndAnimationSpeedChange);
             cpuTimer.Start();
         }
 
-        private void ObserveCPUTick(object sender, EventArgs e)
+        /// <summary>
+        /// CPU使用率をとってアニメーションの速度を変更する
+        /// </summary>
+        /// <param name="sender">しらん</param>
+        /// <param name="e">わからん</param>
+        private void GetCPUUsageAndAnimationSpeedChange(object sender, EventArgs e)
         {
             float s = cpuUsage.NextValue();
             notifyIcon.Text = $"{s:f1}%";
+            // パラパラ漫画の切替速度をここで変えてるらしい？
             s = 200.0f / (float)Math.Max(1.0f, Math.Min(20.0f, s / 5.0f));
             animateTimer.Stop();
             animateTimer.Interval = (int)s;
             animateTimer.Start();
-        }
-
-        private void UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
-        {
-            if (e.Category == UserPreferenceCategory.General)
-            {
-                SetIcons();
-            }
         }
 
     }
