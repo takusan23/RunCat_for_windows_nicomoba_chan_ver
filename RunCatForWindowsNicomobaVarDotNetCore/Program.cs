@@ -13,7 +13,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-using RunCatForWindowsNicomobaVarDotNetCore.Properties;
+using RunCatNicomobaChanVarDotNetCore.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +24,7 @@ using System.Windows.Forms;
 /// ニコモバちゃんをタスクトレイに走らせるコード
 /// .NET Core + WinForm
 /// </summary>
-namespace RunCatForWindowsNicomobaVarDotNetCore
+namespace RunCatNicomobaChanVarDotNetCore
 {
     static class Program
     {
