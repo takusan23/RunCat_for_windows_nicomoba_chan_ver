@@ -13,7 +13,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-using RunCat.Properties;
+using RunCatNicomobaChanVar.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,7 +21,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Resources;
 
-namespace RunCat
+namespace RunCatNicomobaChanVar
 {
     static class Program
     {

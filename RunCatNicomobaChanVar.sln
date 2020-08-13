@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunCat", "RunCat\RunCat.csproj", "{148B00E2-DAFD-4AA6-BDBA-3A365047DD9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunCatNicomobaChanVar", "RunCatNicomobaChanVar\RunCatNicomobaChanVar.csproj", "{148B00E2-DAFD-4AA6-BDBA-3A365047DD9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

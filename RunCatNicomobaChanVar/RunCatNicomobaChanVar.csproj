@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{148B00E2-DAFD-4AA6-BDBA-3A365047DD9B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>RunCat</RootNamespace>
-    <AssemblyName>RunCat</AssemblyName>
+    <RootNamespace>RunCatNicomobaChanVar</RootNamespace>
+    <AssemblyName>RunCatNicomobaChanVar</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>appIcon.ico</ApplicationIcon>
+    <ApplicationIcon>resources\nicomoba_chan_1.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -90,7 +90,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appIcon.ico" />
     <Content Include="resources\appIcon.ico" />
     <None Include="resources\nicomoba_chan_4.ico" />
     <None Include="resources\nicomoba_chan_3.ico" />
