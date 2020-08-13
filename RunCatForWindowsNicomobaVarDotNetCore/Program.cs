@@ -80,8 +80,10 @@ namespace RunCatNicomobaChanVarDotNetCore
                 Visible = true
             };
             // 閉じるボタン。なんか.NET Coreにしたらなんか書き方変わった？
-            var fruitToolStripMenuItem = new ToolStripMenuItem("おつ（終了）", null, Exit, "Exit");
-            notifyIcon.ContextMenuStrip.Items.Add(fruitToolStripMenuItem);
+            var exitMenuItem = new ToolStripMenuItem("おつ（終了）", null, Exit, "Exit");
+            var sourceCodeMenuItem = new ToolStripMenuItem("GitHubを開く", null, OpenGitHub, "Open GitHub");
+            notifyIcon.ContextMenuStrip.Items.Add(exitMenuItem);
+            notifyIcon.ContextMenuStrip.Items.Add(sourceCodeMenuItem);
 
             // アイコン配列用意
             SetIcons();
@@ -122,6 +124,21 @@ namespace RunCatNicomobaChanVarDotNetCore
             cpuTimer.Stop();
             notifyIcon.Visible = false;
             Application.Exit();
+        }
+
+        /// <summary>
+        /// GitHubを開く。.NET Coreから UseShellExecute=true しないとエラー出るようになった？
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenGitHub(object sender, EventArgs e)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "https://github.com/takusan23/RunCat_for_windows_nicomoba_chan_ver",
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
 
         /// <summary>

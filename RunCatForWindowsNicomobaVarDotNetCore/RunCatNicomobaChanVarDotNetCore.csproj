@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>RunCatNicomobaChanVarDotNetCore</AssemblyName>
+    <ApplicationIcon>Resources\nicomoba_chan_1.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
