@@ -5,5 +5,8 @@ https://github.com/Kyome22/RunCat_for_windows
 
 ![Imgur](https://imgur.com/ghhYzL3.png)
 
+`WinForm` + `.NET Core`
+
 # ダウンロード
 https://github.com/takusan23/RunCat_for_windows_nicomoba_chan_ver/releases/tag/NicomobaChanVar_1.0
+
