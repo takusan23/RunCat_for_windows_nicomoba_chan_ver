@@ -18,6 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 /// <summary>
@@ -79,12 +81,14 @@ namespace RunCatNicomobaChanVarDotNetCore
                 Text = "0.0%",
                 Visible = true
             };
+            notifyIcon.MouseUp += TaskTrayIconClick;
             // 閉じるボタン。なんか.NET Coreにしたらなんか書き方変わった？
             var exitMenuItem = new ToolStripMenuItem("おつ（終了）", null, Exit, "Exit");
             var sourceCodeMenuItem = new ToolStripMenuItem("GitHubを開く", null, OpenGitHub, "Open GitHub");
+            var resitryStartup = new ToolStripMenuItem("スタートアップ登録/登録解除", null, RegistarStartUp, "Registar Startup");
             notifyIcon.ContextMenuStrip.Items.Add(exitMenuItem);
             notifyIcon.ContextMenuStrip.Items.Add(sourceCodeMenuItem);
-
+            notifyIcon.ContextMenuStrip.Items.Add(resitryStartup);
             // アイコン配列用意
             SetIcons();
             // アイコン切り替え関数を登録
@@ -95,6 +99,69 @@ namespace RunCatNicomobaChanVarDotNetCore
             StartObserveCPU();
             // 現在のアイコン配列の位置？
             currentIconListPos = 1;
+        }
+
+        /// <summary>
+        /// ニコモバちゃんを押した時。今回は右クリックと同じメニューを出す
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskTrayIconClick(object sender, MouseEventArgs e)
+        {
+            // なんか消せなくなるので：https://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
+            if (e.Button == MouseButtons.Left)
+            {
+                var mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+                mi.Invoke(notifyIcon, null);
+            }
+        }
+
+        /// <summary>
+        /// スタートアップにショートカットを作成する。
+        /// なんか面倒くさい。
+        /// プロジェクト右クリック > 追加 > COM参照 へ進み、 Windows Script Host Object Model にチャックを入れる
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RegistarStartUp(object sender, EventArgs e)
+        {
+            // パス。現在実行中のファイルのパス
+            var appPath = Process.GetCurrentProcess().MainModule.FileName;
+            // このアプリ名。拡張子は抜いてある
+            var appName = Path.GetFileNameWithoutExtension(appPath);
+            // ショートカット先。スタートアップ
+            var shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            // 追加か削除か。trueなら追加済み
+            var isRegistered = false;
+            var shortcutFiles = Directory.GetFiles(shortcutAddress);
+            foreach (string fileName in shortcutFiles)
+            {
+                if (!isRegistered)
+                {
+                    // 同じ名前ならtrue
+                    isRegistered = Path.GetFileNameWithoutExtension(fileName) == appName;
+                }
+            }
+            if (isRegistered)
+            {
+                // 追加済みなので解除
+                File.Delete(@$"{shortcutAddress}\{appName}.lnk");
+                // 結果をダイアログ
+                MessageBox.Show("スタートアップを解除しました", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // 追加する
+                var shell = new IWshRuntimeLibrary.WshShell();
+                // ショートカット作成
+                var objShortcut = (IWshRuntimeLibrary.WshShortcut)shell.CreateShortcut(@$"{shortcutAddress}\{appName}.lnk");
+                // ショートカット元。本家。
+                objShortcut.TargetPath = appPath;
+                // ショートカットを保存
+                objShortcut.Save();
+                // 結果をダイアログ
+                MessageBox.Show("スタートアップに登録しました", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         /// <summary>
