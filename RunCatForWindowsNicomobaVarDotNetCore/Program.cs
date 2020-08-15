@@ -1,5 +1,5 @@
-// ‘f“G‚È–{‰Æ—lFCopyright 2020 Takuto Nakamura https://github.com/Kyome22/RunCat_for_windows
-// ƒjƒRƒ‚ƒovarFCopyright 2020 takusan_23 
+ï»¿// ç´ æ•µãªæœ¬å®¶æ§˜ï¼šCopyright 2020 Takuto Nakamura https://github.com/Kyome22/RunCat_for_windows
+// ãƒ‹ã‚³ãƒ¢ãƒvarï¼šCopyright 2020 takusan_23 
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ using System.Reflection;
 using System.Windows.Forms;
 
 /// <summary>
-/// ƒjƒRƒ‚ƒo‚¿‚á‚ñ‚ğƒ^ƒXƒNƒgƒŒƒC‚É‘–‚ç‚¹‚éƒR[ƒh
+/// ãƒ‹ã‚³ãƒ¢ãƒã¡ã‚ƒã‚“ã‚’ã‚¿ã‚¹ã‚¯ãƒˆãƒ¬ã‚¤ã«èµ°ã‚‰ã›ã‚‹ã‚³ãƒ¼ãƒ‰
 /// .NET Core + WinForm
 /// </summary>
 namespace RunCatNicomobaChanVarDotNetCore
@@ -46,34 +46,34 @@ namespace RunCatNicomobaChanVarDotNetCore
     public class RunCatApplicationContext : ApplicationContext
     {
         /// <summary>
-        /// CPUg—p—¦‚Æ‚é‰½‚©
+        /// CPUä½¿ç”¨ç‡ã¨ã‚‹ä½•ã‹
         /// </summary>
         private PerformanceCounter cpuUsage;
         /// <summary>
-        /// ƒ^ƒXƒNƒo[‚É•\¦‚·‚é‚â‚Â
+        /// ã‚¿ã‚¹ã‚¯ãƒãƒ¼ã«è¡¨ç¤ºã™ã‚‹ã‚„ã¤
         /// </summary>
         private NotifyIcon notifyIcon;
         /// <summary>
-        /// ¡•\¦‚µ‚Ä‚éƒAƒCƒRƒ“‚ÌˆÊ’u
+        /// ä»Šè¡¨ç¤ºã—ã¦ã‚‹ã‚¢ã‚¤ã‚³ãƒ³ã®ä½ç½®
         /// </summary>
         private int currentIconListPos = 0;
         /// <summary>
-        /// ƒAƒCƒRƒ“”z—ñB¡‰ñ‚ÍƒjƒRƒ‚ƒo‚¿‚á‚ñi4–‡j
+        /// ã‚¢ã‚¤ã‚³ãƒ³é…åˆ—ã€‚ä»Šå›ã¯ãƒ‹ã‚³ãƒ¢ãƒã¡ã‚ƒã‚“ï¼ˆ4æšï¼‰
         /// </summary>
         private Icon[] icons;
         /// <summary>
-        /// ’èŠúÀs‚·‚é‚½‚ß‚Ì
+        /// å®šæœŸå®Ÿè¡Œã™ã‚‹ãŸã‚ã®
         /// </summary>
         private Timer animateTimer = new Timer();
         private Timer cpuTimer = new Timer();
 
         public RunCatApplicationContext()
         {
-            // CPUg—p—¦æ‚é‚È‚É‚©
+            // CPUä½¿ç”¨ç‡å–ã‚‹ãªã«ã‹
             cpuUsage = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            _ = cpuUsage.NextValue(); // Å‰‚Ì–ß‚è’l‚ğ”jŠü‚µ‚Ü‚· #‚Á‚Ä‰½
+            _ = cpuUsage.NextValue(); // æœ€åˆã®æˆ»ã‚Šå€¤ã‚’ç ´æ£„ã—ã¾ã™ #ã£ã¦ä½•
 
-            // ƒ^ƒXƒNƒo[‚ÉƒAƒCƒRƒ“‚ğo‚·BWPF‚¾‚Æ‚ß‚ñ‚Ç‚¢‚ñ‚¾‚Á‚¯
+            // ã‚¿ã‚¹ã‚¯ãƒãƒ¼ã«ã‚¢ã‚¤ã‚³ãƒ³ã‚’å‡ºã™ã€‚WPFã ã¨ã‚ã‚“ã©ã„ã‚“ã ã£ã‘
             notifyIcon = new NotifyIcon()
             {
                 Icon = Resources.nicomoba_chan_1,
@@ -82,33 +82,33 @@ namespace RunCatNicomobaChanVarDotNetCore
                 Visible = true
             };
             notifyIcon.MouseUp += TaskTrayIconClick;
-            // •Â‚¶‚éƒ{ƒ^ƒ“B‚È‚ñ‚©.NET Core‚É‚µ‚½‚ç‚È‚ñ‚©‘‚«•û•Ï‚í‚Á‚½H
-            var exitMenuItem = new ToolStripMenuItem("‚¨‚ÂiI—¹j", null, Exit, "Exit");
-            var sourceCodeMenuItem = new ToolStripMenuItem("GitHub‚ğŠJ‚­", null, OpenGitHub, "Open GitHub");
-            var resitryStartup = new ToolStripMenuItem("ƒXƒ^[ƒgƒAƒbƒv“o˜^/“o˜^‰ğœ", null, RegistarStartUp, "Registar Startup");
+            // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ã€‚ãªã‚“ã‹.NET Coreã«ã—ãŸã‚‰ãªã‚“ã‹æ›¸ãæ–¹å¤‰ã‚ã£ãŸï¼Ÿ
+            var exitMenuItem = new ToolStripMenuItem("ãŠã¤ï¼ˆçµ‚äº†ï¼‰", null, Exit, "Exit");
+            var sourceCodeMenuItem = new ToolStripMenuItem("GitHubã‚’é–‹ã", null, OpenGitHub, "Open GitHub");
+            var resitryStartup = new ToolStripMenuItem("ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ç™»éŒ²/ç™»éŒ²è§£é™¤", null, RegistarStartUp, "Registar Startup");
             notifyIcon.ContextMenuStrip.Items.Add(exitMenuItem);
             notifyIcon.ContextMenuStrip.Items.Add(sourceCodeMenuItem);
             notifyIcon.ContextMenuStrip.Items.Add(resitryStartup);
-            // ƒAƒCƒRƒ“”z—ñ—pˆÓ
+            // ã‚¢ã‚¤ã‚³ãƒ³é…åˆ—ç”¨æ„
             SetIcons();
-            // ƒAƒCƒRƒ“Ø‚è‘Ö‚¦ŠÖ”‚ğ“o˜^
+            // ã‚¢ã‚¤ã‚³ãƒ³åˆ‡ã‚Šæ›¿ãˆé–¢æ•°ã‚’ç™»éŒ²
             SetAnimation();
-            // CPUg—p—¦+ƒAƒjƒ[ƒVƒ‡ƒ“‘¬“x•ÏX
+            // CPUä½¿ç”¨ç‡+ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é€Ÿåº¦å¤‰æ›´
             GetCPUUsageAndAnimationSpeedChange(null, EventArgs.Empty);
-            // ª‚±‚ê‚ğ’èŠú“I‚ÉŒÄ‚Ô‚æ‚¤‚É‚·‚é
+            // â†‘ã“ã‚Œã‚’å®šæœŸçš„ã«å‘¼ã¶ã‚ˆã†ã«ã™ã‚‹
             StartObserveCPU();
-            // Œ»İ‚ÌƒAƒCƒRƒ“”z—ñ‚ÌˆÊ’uH
+            // ç¾åœ¨ã®ã‚¢ã‚¤ã‚³ãƒ³é…åˆ—ã®ä½ç½®ï¼Ÿ
             currentIconListPos = 1;
         }
 
         /// <summary>
-        /// ƒjƒRƒ‚ƒo‚¿‚á‚ñ‚ğ‰Ÿ‚µ‚½B¡‰ñ‚Í‰EƒNƒŠƒbƒN‚Æ“¯‚¶ƒƒjƒ…[‚ğo‚·
+        /// ãƒ‹ã‚³ãƒ¢ãƒã¡ã‚ƒã‚“ã‚’æŠ¼ã—ãŸæ™‚ã€‚ä»Šå›ã¯å³ã‚¯ãƒªãƒƒã‚¯ã¨åŒã˜ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’å‡ºã™
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TaskTrayIconClick(object sender, MouseEventArgs e)
         {
-            // ‚È‚ñ‚©Á‚¹‚È‚­‚È‚é‚Ì‚ÅFhttps://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
+            // ãªã‚“ã‹æ¶ˆã›ãªããªã‚‹ã®ã§ï¼šhttps://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
             if (e.Button == MouseButtons.Left)
             {
                 var mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -117,55 +117,55 @@ namespace RunCatNicomobaChanVarDotNetCore
         }
 
         /// <summary>
-        /// ƒXƒ^[ƒgƒAƒbƒv‚ÉƒVƒ‡[ƒgƒJƒbƒg‚ğì¬‚·‚éB
-        /// ‚È‚ñ‚©–Ê“|‚­‚³‚¢B
-        /// ƒvƒƒWƒFƒNƒg‰EƒNƒŠƒbƒN > ’Ç‰Á > COMQÆ ‚Öi‚İA Windows Script Host Object Model ‚Éƒ`ƒƒƒbƒN‚ğ“ü‚ê‚é
+        /// ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ã«ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚’ä½œæˆã™ã‚‹ã€‚
+        /// ãªã‚“ã‹é¢å€’ãã•ã„ã€‚
+        /// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå³ã‚¯ãƒªãƒƒã‚¯ > è¿½åŠ  > COMå‚ç…§ ã¸é€²ã¿ã€ Windows Script Host Object Model ã«ãƒãƒ£ãƒƒã‚¯ã‚’å…¥ã‚Œã‚‹
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void RegistarStartUp(object sender, EventArgs e)
         {
-            // ƒpƒXBŒ»İÀs’†‚Ìƒtƒ@ƒCƒ‹‚ÌƒpƒX
+            // ãƒ‘ã‚¹ã€‚ç¾åœ¨å®Ÿè¡Œä¸­ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
             var appPath = Process.GetCurrentProcess().MainModule.FileName;
-            // ‚±‚ÌƒAƒvƒŠ–¼BŠg’£q‚Í”²‚¢‚Ä‚ ‚é
+            // ã“ã®ã‚¢ãƒ—ãƒªåã€‚æ‹¡å¼µå­ã¯æŠœã„ã¦ã‚ã‚‹
             var appName = Path.GetFileNameWithoutExtension(appPath);
-            // ƒVƒ‡[ƒgƒJƒbƒgæBƒXƒ^[ƒgƒAƒbƒv
+            // ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆå…ˆã€‚ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—
             var shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-            // ’Ç‰Á‚©íœ‚©Btrue‚È‚ç’Ç‰ÁÏ‚İ
+            // è¿½åŠ ã‹å‰Šé™¤ã‹ã€‚trueãªã‚‰è¿½åŠ æ¸ˆã¿
             var isRegistered = false;
             var shortcutFiles = Directory.GetFiles(shortcutAddress);
             foreach (string fileName in shortcutFiles)
             {
                 if (!isRegistered)
                 {
-                    // “¯‚¶–¼‘O‚È‚çtrue
+                    // åŒã˜åå‰ãªã‚‰true
                     isRegistered = Path.GetFileNameWithoutExtension(fileName) == appName;
                 }
             }
             if (isRegistered)
             {
-                // ’Ç‰ÁÏ‚İ‚È‚Ì‚Å‰ğœ
+                // è¿½åŠ æ¸ˆã¿ãªã®ã§è§£é™¤
                 File.Delete(@$"{shortcutAddress}\{appName}.lnk");
-                // Œ‹‰Ê‚ğƒ_ƒCƒAƒƒO
-                MessageBox.Show("ƒXƒ^[ƒgƒAƒbƒv‚ğ‰ğœ‚µ‚Ü‚µ‚½", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // çµæœã‚’ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
+                MessageBox.Show("ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ã‚’è§£é™¤ã—ã¾ã—ãŸ", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                // ’Ç‰Á‚·‚é
+                // è¿½åŠ ã™ã‚‹
                 var shell = new IWshRuntimeLibrary.WshShell();
-                // ƒVƒ‡[ƒgƒJƒbƒgì¬
+                // ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆä½œæˆ
                 var objShortcut = (IWshRuntimeLibrary.WshShortcut)shell.CreateShortcut(@$"{shortcutAddress}\{appName}.lnk");
-                // ƒVƒ‡[ƒgƒJƒbƒgŒ³B–{‰ÆB
+                // ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆå…ƒã€‚æœ¬å®¶ã€‚
                 objShortcut.TargetPath = appPath;
-                // ƒVƒ‡[ƒgƒJƒbƒg‚ğ•Û‘¶
+                // ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚’ä¿å­˜
                 objShortcut.Save();
-                // Œ‹‰Ê‚ğƒ_ƒCƒAƒƒO
-                MessageBox.Show("ƒXƒ^[ƒgƒAƒbƒv‚É“o˜^‚µ‚Ü‚µ‚½", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // çµæœã‚’ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
+                MessageBox.Show("ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ã«ç™»éŒ²ã—ã¾ã—ãŸ", appName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         /// <summary>
-        /// ƒpƒ‰ƒpƒ‰–Ÿ‰æ‚Åg‚¤ƒAƒCƒRƒ“‚ğ”z—ñ‚É“ü‚ê‚Ä—pˆÓ‚·‚é
+        /// ãƒ‘ãƒ©ãƒ‘ãƒ©æ¼«ç”»ã§ä½¿ã†ã‚¢ã‚¤ã‚³ãƒ³ã‚’é…åˆ—ã«å…¥ã‚Œã¦ç”¨æ„ã™ã‚‹
         /// </summary>
         private void SetIcons()
         {
@@ -181,10 +181,10 @@ namespace RunCatNicomobaChanVarDotNetCore
         }
 
         /// <summary>
-        /// I—¹‚Éƒ^ƒCƒ}[~‚ß‚é‚È‚Ç
+        /// çµ‚äº†æ™‚ã«ã‚¿ã‚¤ãƒãƒ¼æ­¢ã‚ã‚‹ãªã©
         /// </summary>
-        /// <param name="sender">‚µ‚ç‚ñ</param>
-        /// <param name="e">‚í‚©‚ç‚ñ</param>
+        /// <param name="sender">ã—ã‚‰ã‚“</param>
+        /// <param name="e">ã‚ã‹ã‚‰ã‚“</param>
         private void Exit(object sender, EventArgs e)
         {
             animateTimer.Stop();
@@ -194,7 +194,7 @@ namespace RunCatNicomobaChanVarDotNetCore
         }
 
         /// <summary>
-        /// GitHub‚ğŠJ‚­B.NET Core‚©‚ç UseShellExecute=true ‚µ‚È‚¢‚ÆƒGƒ‰[o‚é‚æ‚¤‚É‚È‚Á‚½H
+        /// GitHubã‚’é–‹ãã€‚.NET Coreã‹ã‚‰ UseShellExecute=true ã—ãªã„ã¨ã‚¨ãƒ©ãƒ¼å‡ºã‚‹ã‚ˆã†ã«ãªã£ãŸï¼Ÿ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -209,7 +209,7 @@ namespace RunCatNicomobaChanVarDotNetCore
         }
 
         /// <summary>
-        /// ChangeIcon‚ğ’èŠú“I‚ÉŒÄ‚Ô‚æ‚¤‚É‚·‚é
+        /// ChangeIconã‚’å®šæœŸçš„ã«å‘¼ã¶ã‚ˆã†ã«ã™ã‚‹
         /// </summary>
         private void SetAnimation()
         {
@@ -218,11 +218,11 @@ namespace RunCatNicomobaChanVarDotNetCore
         }
 
         /// <summary>
-        /// ‚±‚±‚ª’èŠú“I‚ÉŒÄ‚Î‚êA‰æ‘œ‚ğØ‚è‘Ö‚¦‚Ä‚¢‚éB
-        /// ‚Ç‚¤‚â‚çGetCPUUsageAndAnimationSpeedChange‚ªXV•p“x‚ğ•Ï‚¦‚Ä‚é‚ç‚µ‚¢H
+        /// ã“ã“ãŒå®šæœŸçš„ã«å‘¼ã°ã‚Œã€ç”»åƒã‚’åˆ‡ã‚Šæ›¿ãˆã¦ã„ã‚‹ã€‚
+        /// ã©ã†ã‚„ã‚‰GetCPUUsageAndAnimationSpeedChangeãŒæ›´æ–°é »åº¦ã‚’å¤‰ãˆã¦ã‚‹ã‚‰ã—ã„ï¼Ÿ
         /// </summary>
-        /// <param name="sender">‚µ‚ç‚ñ</param>
-        /// <param name="e">‚í‚©‚ç‚ñ</param>
+        /// <param name="sender">ã—ã‚‰ã‚“</param>
+        /// <param name="e">ã‚ã‹ã‚‰ã‚“</param>
         private void ChangeIcon(object sender, EventArgs e)
         {
             notifyIcon.Icon = icons[currentIconListPos];
@@ -230,7 +230,7 @@ namespace RunCatNicomobaChanVarDotNetCore
         }
 
         /// <summary>
-        /// GetCPUUsageAndAnimationSpeedChangeŠÖ”‚ğ’èŠú“I‚ÉŒÄ‚Ô‚æ‚¤‚É‚·‚é
+        /// GetCPUUsageAndAnimationSpeedChangeé–¢æ•°ã‚’å®šæœŸçš„ã«å‘¼ã¶ã‚ˆã†ã«ã™ã‚‹
         /// </summary>
         private void StartObserveCPU()
         {
@@ -240,15 +240,15 @@ namespace RunCatNicomobaChanVarDotNetCore
         }
 
         /// <summary>
-        /// CPUg—p—¦‚ğ‚Æ‚Á‚ÄƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ğ•ÏX‚·‚é
+        /// CPUä½¿ç”¨ç‡ã‚’ã¨ã£ã¦ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é€Ÿåº¦ã‚’å¤‰æ›´ã™ã‚‹
         /// </summary>
-        /// <param name="sender">‚µ‚ç‚ñ</param>
-        /// <param name="e">‚í‚©‚ç‚ñ</param>
+        /// <param name="sender">ã—ã‚‰ã‚“</param>
+        /// <param name="e">ã‚ã‹ã‚‰ã‚“</param>
         private void GetCPUUsageAndAnimationSpeedChange(object sender, EventArgs e)
         {
             float s = cpuUsage.NextValue();
             notifyIcon.Text = $"{s:f1}%";
-            // ƒpƒ‰ƒpƒ‰–Ÿ‰æ‚ÌØ‘Ö‘¬“x‚ğ‚±‚±‚Å•Ï‚¦‚Ä‚é‚ç‚µ‚¢H
+            // ãƒ‘ãƒ©ãƒ‘ãƒ©æ¼«ç”»ã®åˆ‡æ›¿é€Ÿåº¦ã‚’ã“ã“ã§å¤‰ãˆã¦ã‚‹ã‚‰ã—ã„ï¼Ÿ
             s = 200.0f / (float)Math.Max(1.0f, Math.Min(20.0f, s / 5.0f));
             animateTimer.Stop();
             animateTimer.Interval = (int)s;
