@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -83,12 +84,9 @@ namespace RunCatNicomobaChanVarDotNetCore
             };
             notifyIcon.MouseUp += TaskTrayIconClick;
             // 閉じるボタン。なんか.NET Coreにしたらなんか書き方変わった？
-            var exitMenuItem = new ToolStripMenuItem("おつ（終了）", null, Exit, "Exit");
-            var sourceCodeMenuItem = new ToolStripMenuItem("GitHubを開く", null, OpenGitHub, "Open GitHub");
-            var resitryStartup = new ToolStripMenuItem("スタートアップ登録/登録解除", null, RegistarStartUp, "Registar Startup");
-            notifyIcon.ContextMenuStrip.Items.Add(exitMenuItem);
-            notifyIcon.ContextMenuStrip.Items.Add(sourceCodeMenuItem);
-            notifyIcon.ContextMenuStrip.Items.Add(resitryStartup);
+            notifyIcon.ContextMenuStrip.Items.Add(new ToolStripMenuItem("おつ（終了）", null, this.Exit, "Exit"));
+            notifyIcon.ContextMenuStrip.Items.Add(new ToolStripMenuItem("GitHubを開く", null, this.OpenGitHub, "Open GitHub"));
+            notifyIcon.ContextMenuStrip.Items.Add(new ToolStripMenuItem("スタートアップ登録/登録解除", null, this.RegistarStartUp, "Registar Startup"));
             // アイコン配列用意
             SetIcons();
             // アイコン切り替え関数を登録
@@ -131,17 +129,11 @@ namespace RunCatNicomobaChanVarDotNetCore
             var appName = Path.GetFileNameWithoutExtension(appPath);
             // ショートカット先。スタートアップ
             var shortcutAddress = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-            // 追加か削除か。trueなら追加済み
-            var isRegistered = false;
             var shortcutFiles = Directory.GetFiles(shortcutAddress);
-            foreach (string fileName in shortcutFiles)
-            {
-                if (!isRegistered)
-                {
-                    // 同じ名前ならtrue
-                    isRegistered = Path.GetFileNameWithoutExtension(fileName) == appName;
-                }
-            }
+            // 追加か削除か。trueなら追加済み
+            var isRegistered = shortcutFiles
+                           .Select(fileName => Path.GetFileNameWithoutExtension(fileName))
+                           .Contains(appName);
             if (isRegistered)
             {
                 // 追加済みなので解除
@@ -249,7 +241,7 @@ namespace RunCatNicomobaChanVarDotNetCore
             float s = cpuUsage.NextValue();
             notifyIcon.Text = $"{s:f1}%";
             // パラパラ漫画の切替速度をここで変えてるらしい？
-            s = 200.0f / (float)Math.Max(1.0f, Math.Min(20.0f, s / 5.0f));
+            s = 200.0f / (float)Math.Max(1.0f, Math.Min(20.0f, s / 10.0f));
             animateTimer.Stop();
             animateTimer.Interval = (int)s;
             animateTimer.Start();
